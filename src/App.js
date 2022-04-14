@@ -26,7 +26,7 @@ function App() {
     sessionStorage.setItem("webId", webId);
     sessionStorage.setItem("podStatus", true);
     document.getElementById("webID").innerHTML = webId;
-    window.location.href = "/react-web-view-pod";
+    window.location.href = "/";
   });
 
   // Function definition for signing into POD
