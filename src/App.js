@@ -7,6 +7,7 @@ import {
   getDefaultSession,
   onLogin,
 } from "@inrupt/solid-client-authn-browser";
+import GoogleLogin from "react-google-login";
 
 function App() {
   // Function to handle incoming redirects
@@ -39,9 +40,28 @@ function App() {
     });
   };
 
+  const responseGoogle = (googleUser) => {
+    console.log(googleUser);
+    sessionStorage.setItem("googleUserDetails", JSON.stringify(googleUser));
+    // window.location.href = "/dashboard";
+  };
+
   return (
     <div className="App">
       <header className="App-header">
+        <GoogleLogin
+          className="check"
+          clientId="950311351563-ehj50jsqhnacs05u8m45lrlravs56982.apps.googleusercontent.com"
+          buttonText="Sign In"
+          onSuccess={responseGoogle}
+          onFailure={() => {
+            console.log("Google error");
+          }}
+          cookiePolicy={"single_host_origin"}
+          theme="dark"
+          scope="https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.body.read https://www.googleapis.com/auth/fitness.blood_glucose.read https://www.googleapis.com/auth/fitness.blood_pressure.read https://www.googleapis.com/auth/fitness.body_temperature.read https://www.googleapis.com/auth/fitness.heart_rate.read https://www.googleapis.com/auth/fitness.location.read https://www.googleapis.com/auth/fitness.nutrition.read https://www.googleapis.com/auth/fitness.oxygen_saturation.read https://www.googleapis.com/auth/fitness.reproductive_health.read https://www.googleapis.com/auth/fitness.sleep.read"
+        />
+
         <button
           onClick={() => {
             signInPOD();
@@ -49,7 +69,8 @@ function App() {
         >
           Login
         </button>
-        <p id="webID">{sessionStorage.getItem('webId')}</p>
+        <p id="webID">{sessionStorage.getItem("webId")}</p>
+        <p id="googleUser">{sessionStorage.getItem("googleUserDetails")}</p>
       </header>
     </div>
   );
